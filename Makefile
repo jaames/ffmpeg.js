@@ -11,16 +11,11 @@ PRE_JS = build/pre.js
 POST_JS_SYNC = build/post-sync.js
 POST_JS_WORKER = build/post-worker.js
 
-COMMON_FILTERS = aresample scale crop overlay pad firequalizer
-COMMON_DEMUXERS = matroska ogg avi mov flv mpegps image2 mp3 concat wav pcm_mulaw pcm_alaw pcm_s16le
+COMMON_FILTERS = aresample amix amerge adelay scale crop overlay pad firequalizer fps
+COMMON_DEMUXERS = image2 concat wav gif pcm_mulaw pcm_alaw pcm_s16le
 COMMON_DECODERS = \
-	vp8 vp9 theora \
-	mpeg2video mpeg4 h264 hevc \
-	png mjpeg \
-	vorbis opus \
-	mp3 ac3 aac \
-	wavpack pcm_alaw pcm_mulaw pcm_s16le \
-	ass ssa srt webvtt
+	gif \
+	pcm_alaw pcm_mulaw pcm_s16le \
 
 WEBM_MUXERS = webm ogg null image2
 WEBM_ENCODERS = libvpx_vp8 libopus mjpeg
