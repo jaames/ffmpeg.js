@@ -2,18 +2,24 @@
 # You need emsdk environment installed and activated, see:
 # <https://kripken.github.io/emscripten-site/docs/getting_started/downloads.html>.
 
+# Modified by Jaames:
+# - disable WASM output in the latest version of emscripten (1.38.31)
+# - add pad and firequalizer filters
+# - add wav and pcm_s16le decoder
+
 PRE_JS = build/pre.js
 POST_JS_SYNC = build/post-sync.js
 POST_JS_WORKER = build/post-worker.js
 
-COMMON_FILTERS = aresample scale crop overlay
-COMMON_DEMUXERS = matroska ogg avi mov flv mpegps image2 mp3 concat
+COMMON_FILTERS = aresample scale crop overlay pad firequalizer
+COMMON_DEMUXERS = matroska ogg avi mov flv mpegps image2 mp3 concat wav pcm_mulaw pcm_alaw pcm_s16le
 COMMON_DECODERS = \
 	vp8 vp9 theora \
 	mpeg2video mpeg4 h264 hevc \
 	png mjpeg \
 	vorbis opus \
 	mp3 ac3 aac \
+	wavpack pcm_alaw pcm_mulaw pcm_s16le \
 	ass ssa srt webvtt
 
 WEBM_MUXERS = webm ogg null image2
@@ -308,6 +314,7 @@ EMCC_COMMON_ARGS = \
 	--closure 1 \
 	-s TOTAL_MEMORY=67108864 \
 	-s OUTLINING_LIMIT=20000 \
+  -s WASM=0 \
 	-O3 --memory-init-file 0 \
 	--pre-js $(PRE_JS) \
 	-o $@
