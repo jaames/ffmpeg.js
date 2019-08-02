@@ -34,7 +34,11 @@ function __ffmpegjs(__ffmpegjs_opts) {
       exit = Module["exit"] = function(status) {
         ABORT = true;
         EXITSTATUS = status;
-        STACKTOP = initialStackTop;
+        // Jaames: 
+        // This line was causing compilation to fail with Escripten 1.38.31,
+        // since initialStackTop is not defined anywhere
+        // STACKTOP = initialStackTop;
+        STACKTOP = undefined;
         exitRuntime();
         if (Module["onExit"]) Module["onExit"](status);
         throw new ExitStatus(status);
